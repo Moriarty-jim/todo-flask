@@ -1,0 +1,11 @@
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+.todo-items{
+    background-color: #eee;
+    list-style: none;
+    margin-bottom: 5px;
+    padding: 5px;
+}

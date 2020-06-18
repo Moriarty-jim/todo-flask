@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
+    <title>ToDo</title>
+</head>
+<body>
+    <div class="container">
+        <h2>TODO maker: {{ current_user.username}}</h2>
+        <div class="message">
+            {% with messages = get_flashed_messages(with_categories=false) %}
+            {% if messages %}
+              {% for  message in messages %}
+                <div class="">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </div>
+        <form id="todo-form" action="{{ url_for('home')}}" method="POST">
+            <div>
+                <label >todo</label>
+                <input id="todo-text" type="text" name="todoItem">
+                <input type="hidden" name="btn_identifier" value="addTodo" />
+            </div>
+            <input id="todo-button" type="submit" value="Add" name="add">
+        </form>
+        <form id="deleteAll-form" action="{{ url_for('home')}}" method="POST">
+            <input type="hidden" name="btn_identifier" value="delete all" />
+            <input id="deleteAll-button" type="submit" value="delete all" name="deleteAll">
+        </form>
+        <ul class="todo-list">
+            {% if todo_items is defined %}
+                {% for i in range(todo_items.count()) %}
+                
+                <div class="todo-items" id="" style="display: flex; justify-content:space-between;">
+                    <li class="list-items" id="{{ 'list-item-' + i|string }}">{{ todo_items[i] }}</li>
+                    <label for="completed">Completed</label>
+                    <input type="checkbox" id="{{ 'chk-done-' + i|string }}" onclick="taskDone(this.id)" name="completed">
+                    <input type="button" id="{{ 'btn-delete-' + i|string }}" value="Delete item" onclick="deleteItem(this.id);" >
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>no items added</p>
+            {% endif %}
+        </ul>
+    </div>
+    <div>
+        <a href="{{url_for('logout') }}">logout</a>
+    </div>
+    <script src="{{url_for('static', filename='js/todo.js')}}">   </script>
+    <div>
+        <p id="demo"></p>
+    </div>
+</body>
+</html>
