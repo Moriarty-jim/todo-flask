@@ -23,3 +23,27 @@
     </form>
 </div>
 <p>already registered? <a href="{{ url_for('login')}}">login</a></p>
+
+
+<!-- <label for="">message:</label> 
+<input id="message">
+<button id="button-test"onclick="someFunction()"> send </button>
+<p id="demo"></p>
+
+<script>
+  function someFunction(){
+    const text = document.getElementById('message').value;
+    console.log(JSON.stringify({'text': text}));
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("PosT", '/register/somefunction', true);
+    xhttp.setRequestHeader("Content-Type", "application/json")
+    xhttp.onreadystatechange = function(){
+      if (this.readyState == 4 && this.status == 200){
+        const jsonreturn = JSON.parse(xhttp.responseText)
+      document.getElementById('demo').innerHTML = jsonreturn['text'];
+      }
+    };
+    
+    xhttp.send(JSON.stringify({'text': text}));
+  }
+</script> -->

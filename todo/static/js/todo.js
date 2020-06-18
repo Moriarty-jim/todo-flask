@@ -1,31 +1,54 @@
+function addItem(btnId){
+    const inputAddItem = document.getElementById('todo-text').value;
+    console.log(inputAddItem);
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.open('POST', '/todo/add', true );
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.onreadystatechange = function() {
+        if(this.readyState== 4 && this.status == 200){
+            document.getElementById('demo').innerHTML=this.responseText;
+
+        }
+    };
+    console.log(JSON.stringify({'todo_item':inputAddItem}));
+    xhttp.send(JSON.stringify({'todo_item':inputAddItem}))
+}
+
+
 function taskDone(chkId){
-    let completeditem = document.querySelector('#'+chkId).parentElement.children[0];
-    let completedChkBOx = document.getElementById(chkId);
-    let xhttp = new XMLHttpRequest();
+    const parent = document.getElementById(chkId).parentElement;
+    const completedItemText = parent.children[0];
+    const completedChkBOx = document.getElementById(chkId);
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.open('POST', '/todo/completed', true );
+    xhttp.setRequestHeader("Content-Type", "application/json")
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            completeditem.innerHTML = this.responseText;
+            const jsonreturn = JSON.parse(xhttp.responseText)
+            console.log(jsonreturn['is_completed']);
+            if( jsonreturn['is_completed'] == true){
+                parent.style.backgroundColor= "#a6eda7"
+            }
+            else{
+                parent.style.backgroundColor= "#eee"
+            }
         }
       };
     
-    let data = {'completed': completedChkBOx.checked}
-    xhttp.open('POST', '/todo/completed', true );
+    let data = {'is_completed': completedChkBOx.checked,
+                'todo_item': completedItemText.textContent}
+    // console.log(JSON.stringify(data))
     xhttp.send(JSON.stringify(data));
-
-
-    // if(completedChkBOx.checked == true){
-    //     // completeditem.style.color = "#467a47"
-    //     completeditem.parentElement.style.backgroundColor= "#a6eda7"
-    // }else{
-    //     completeditem.style.color = "black"
-    //     completeditem.parentElement.style.backgroundColor= "#eee"
-    // }
 }
 
+
+
 function deleteItem(btnId) {
-    let toDeleteItem = document.querySelector('#'+btnId).parentElement;
-    let toDeleteText = toDeleteItem.children[0].textContent;
-    var xhttp = new XMLHttpRequest();
+    const toDeleteItem = document.querySelector('#'+btnId).parentElement;
+    const toDeleteText = toDeleteItem.children[0].textContent;
+    const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             document.getElementById("demo").innerHTML = this.responseText;
@@ -36,3 +59,20 @@ function deleteItem(btnId) {
     toDeleteItem.remove();
 
 }
+
+
+// function someFunction(){
+//     const text = document.getElementById('message').value;
+//     console.log(JSON.stringify({'text': text}));
+//     const xhttp = new XMLHttpRequest();
+//     xhttp.open("PosT", '/register/somefunction', true);
+//     xhttp.setRequestHeader("Content-Type", "application/json")
+//     xhttp.onreadystatechange = function(){
+//       if (this.readyState == 4 && this.status == 200){
+//         const jsonreturn = JSON.parse(xhttp.responseText)
+//       document.getElementById('demo').innerHTML = jsonreturn['text'];
+//       }
+//     };
+    
+//     xhttp.send(JSON.stringify({'text': text}));
+//   }

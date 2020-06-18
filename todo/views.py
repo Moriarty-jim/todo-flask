@@ -8,30 +8,24 @@ from flask_login import login_user, logout_user, current_user, login_required
 @login_required
 def home():
     todo_items = Todo.query.filter_by(author=current_user)
-    
+    return render_template('todo.html', todo_items=todo_items)
+
+@app.route("/todo/add", methods={"POST","GET"})
+@login_required
+def add_item():
     if request.method == 'POST':
-        if request.form.get('btn_identifier') == 'addTodo':
-            added_item = request.form.get('todoItem')
-            if added_item != '':
-                item = Todo(todo_item=added_item, user_id=current_user.id)
+        if request.get_json:
+            try:
+                response = request.get_json()
+                item_to_add = response['todo_item']
+                item = Todo(user_id=current_user.id, todo_item=item_to_add)
                 db.session.add(item)
                 db.session.commit()
-                return redirect(url_for('home'))
-            else:
-                flash('no item written')
-        elif request.form.get('btn_identifier') == 'delete all':
-            try:
-                # delete_item = Todo.query.first()
-                # db.session.delete(delete_item)
-                del_items = Todo.query.filter_by(user_id = current_user.id).all()
-                for item in del_items:
-                    db.session.delete(item)
-                    db.session.commit()
-                return redirect(url_for('home'))
+                return jsonify({'item':item_to_add})
             except:
-                flash('no items to delete')
-
-    return render_template('todo.html', todo_items=todo_items)
+                flash('error')
+        
+    flash('item deleted')
 
 @app.route("/todo/delete", methods={"POST","GET"})
 @login_required
@@ -41,7 +35,7 @@ def delete_item():
         item = Todo.query.filter_by(user_id=current_user.id, todo_item=str(to_delete_item, 'utf-8')).first()
         db.session.delete(item)
         db.session.commit()
-    return 'item deleted'
+    flash('item deleted')
 
 
 @app.route("/todo/completed", methods={"POST","GET"})
@@ -49,11 +43,41 @@ def delete_item():
 def completed_item():
     if request.method == 'POST':
         if request.is_json:
-            completed_todo_item = request.get_json()
-            is_completed = {'is_completed': item.completed }
-            return jsonify(is_completed)
-        else:
-            return 'qwe'
+            try:
+                response = request.get_json()
+                is_completed = response['is_completed']
+                todo_item = response['todo_item']
+                item = Todo.query.filter_by(user_id=current_user.id, todo_item=todo_item).first()
+                try:
+                    if is_completed:
+                        item.completed = True
+                        db.session.commit()
+
+                    else:
+                        item.completed = False
+                        db.session.commit()
+                        
+                    return jsonify({'is_completed':item.completed})
+                except:
+                    flash('some error')
+
+               
+            except:
+                flash('some error')
+      
+
+# @app.route("/register/somefunction", methods=["POST"])
+# def somefunction():
+#     if request.method == "POST":
+#         if request.is_json:
+#             response = request.get_json()
+#             text = response['text']
+#             return jsonify({'text':text})
+#         else:
+#             return 'not json'
+#         return 'post'
+#     else:
+#         return 'not post'
 
     
 @app.route("/register", methods=['GET', 'POST'])
@@ -97,4 +121,5 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
 
