@@ -1,0 +1,89 @@
+.form-container {
+    /* background: #fff; */
+    padding: 4em 4em 2em;
+    max-width: 400px;
+    margin: 50px auto 0;
+    box-shadow: 0 0 1em #222;
+    border-radius: 2px;
+    
+}
+.form-container h2 {
+    margin:0 0 50px 0;
+    padding:10px;
+    text-align:center;
+    font-size:30px;
+    color: #e5e5e5;
+    border-bottom:solid 1px #e5e5e5;
+}
+
+.input-container {
+    margin: 0 0 3em 0;
+    position: relative;
+}
+
+.input-container input {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    outline: none;
+    margin:0;
+    color: #fff;
+}
+/* .input-container label{
+    position: absolute;
+    left: 8px;
+    top: 12px;
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    display: inline-block;
+    padding: 4px 10px;
+    font-weight: 400;
+    background-color: rgba(255,255,255,0);
+} */
+
+.input-container input[type="text"], .input-container input[type="password"] {
+    background: inherit;
+    border: 1px solid #dbdbdb;
+    font-size: 1.6em;
+    padding: .8em .5em;
+    border-radius: 2px;
+  }
+/* .input-container input[type="text"]:focus, .input-container input[type="password"]:focus {
+    background: #eee
+} */
+.input-container input[type="submit"] {
+    background: rgba(148,186,101,0.7);
+    box-shadow: 0 3px 0 0 rgba(121, 175, 54, 0.7);
+    border-radius: 12px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    font-size: 2em;
+    line-height: 1em;
+    /* margin: 2em 0 0; */
+    outline: none;
+    padding: .8em 0;
+    text-shadow: 0 1px #68B25B;
+}
+.input-container input[type="submit"]:hover {
+    background: rgba(148,175,101,1);
+    text-shadow:0 1px 3px rgba(148,186,101,0.7);
+}
+
+.end-question{
+    padding-top: 1em;
+    text-align: center;
+}
+.end-question a{
+    text-decoration: none;
+    color: #e5e5e5;
+
+    /* font-weight: bold; */
+}
+
+.end-question a:hover{
+    font-weight: bold;
+    color: rgb(128, 119, 119);
+
+}

@@ -1,25 +1,23 @@
-<div class="container">
-  <div class="message">
-      {% with messages = get_flashed_messages(with_categories=false) %}
-      {% if messages %}
-        {% for  message in messages %}
-          <div class="">
-            {{ message }}
-          </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-  </div>
-  <form action="{{url_for('login')}}" method="POST">
-      <div>
-          <label for="username">Username</label>
-          <input type="text" id="username" name='username'>
-      </div>
-      <div>
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password">
-      </div>
-      <input type="submit" value="login">
-  </form>
-  <p>not registered? <a href="{{ url_for('register')}}">register</a></p>
-</div>
+{% extends "layout.html" %}
+{% block csslink%}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/registerlogin.css')}}">
+{% endblock csslink %}
+
+{% block content %}
+<form class="form-container" action="{{url_for('login')}}" method="POST">
+    <h2>login</h2>
+    <p class="input-container">
+        <label class="floatLabel" for="username">Username</label>
+        <input type="text" id="username" name='username'>
+    </p>
+    <p class="input-container">
+        <label class="floatLabel" for="password">Password</label>
+        <input type="password" id="password" name="password">
+    </p>
+    <p class="input-container">
+        <input type="submit" value="login">
+    </p>
+</form>
+<p class="end-question">not registered? <a href="{{ url_for('register')}}">register</a></p>
+{%endblock content %}

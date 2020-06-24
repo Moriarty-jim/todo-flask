@@ -1,11 +1,164 @@
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding-top: 20px;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-.todo-items{
-    /* background-color: #eee; */
+
+body{
+    font-family:'pangolin',arial,sans-serif;
+    font-size:100%;
+    margin:2em;
+    color:#fff;
+    background: url('../images/html-color-codes-color-tutorials-hero-00e10b1f.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+h2,p{
+    font-size:100%;
+    font-weight:normal;
+}
+h2{
+    text-align: center;
+    /* font-family: 'Pangolin', arial,sans-serif; */
+}
+.todo-list{
+    overflow:hidden;
+    padding:3em;
+    position: relative;
+}
+
+.todo-item{
     list-style: none;
-    margin-bottom: 5px;
+    margin:1em;
+    float:left;
+    transform: rotate(-6deg);
+    /* position: relative; */
+    padding: 1em;
+    text-decoration:none;
+    color:#000;
+    display:block;
+    height:12em;
+    width:12em;
+    overflow: hidden;
+    -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
+    -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+    box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+    transition: transform .25s linear;   
+}
+
+.todo-item:nth-child(even) {
+    transform: rotate(4deg);
+}
+.todo-item:nth-child(3n) {
+    transform: rotate(-3deg);
+}
+.todo-item:nth-child(5n) {
+    transform: rotate(7deg);
+}
+
+.todo-item:hover, .todo-item:focus{
+    -moz-box-shadow:10px 10px 7px rgba(0,0,0,.7);
+    -webkit-box-shadow: 10px 10px 7px rgba(0,0,0,.7);
+    box-shadow:10px 10px 7px rgba(0,0,0,.7);
+    transform: scale(1.25);    
+    position: relative;
+    width: fit-content;
+    z-index: 100;
+    overflow-y: scroll;
+}
+
+.todo-item::-webkit-scrollbar {
+    width: 10px;
+}
+  
+/* Track */
+.todo-item::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+/* Handle */
+.todo-item::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+/* Handle on hover */
+.todo-item::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+.todo-context{
+font-family:"Reenie Beanie",arial,sans-serif;
+font-size:170%;
+}
+
+.todo-item div{
+  text-decoration:none;
+  color:#000;
+  display:block;
+  min-height:12em;
+  width:12em;
+  padding:1em;
+  overflow: hidden;
+  word-break: break-all;
+  /* -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
+  -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+  box-shadow: 5px 5px 7px rgba(33,33,33,.7); */
+  
+  /* -webkit-transform:rotate(-6deg);
+  -o-transform:rotate(-6deg);
+  -moz-transform:rotate(-6deg); */
+  /* -moz-transition:-moz-transform .15s linear;
+  -o-transition:-o-transform .15s linear;
+  -webkit-transition:-webkit-transform .15s linear; */
+}
+
+.logout a{
+    color: black;  
+    text-decoration:none;
+    border: 1px solid black;
+    padding: 3px;
+    background-color: rgb(231, 226, 220);
+    border-radius: 5px;
+}
+.logout a:hover{
+    color: rgb(235, 222, 222);
+    background-color: #222;
+    font-size:20[px];
+    
+}
+.todo-add {
+    padding: 20px;
+    /* font-family: 'Pangolin', arial,sans-serif; */
+
+}
+.todo-add form input[type=submit], .todo-add form input[type=text]{
+    border-radius: 5px;
+    padding: 3px;
+}
+
+.todo-add form input[type=text]:focus{
+   background-color: rgb(240, 240, 85);
+}
+
+.todo-add form input[type=submit]:hover{
+    cursor: pointer;
+}
+
+
+.todo-delete {
     padding: 5px;
+    border-radius: 50%;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.todo-delete:hover{
+    background-color: rgb(216, 14, 14);
+    color: whitesmoke;
+}
+.msg {
+    border-bottom: 1px #222 solid;
+    font-size: .8em;
 }

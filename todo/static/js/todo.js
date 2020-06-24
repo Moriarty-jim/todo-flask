@@ -1,78 +1,100 @@
-function addItem(btnId){
-    const inputAddItem = document.getElementById('todo-text').value;
-    console.log(inputAddItem);
+// function addItem(btnId){
+//     let inputAddItem = document.getElementById('todo-text').value;
+//     const todoList = document.getElementById('todo-list');
+//     const msg = document.querySelector('#msg');
+//     console.log(todoList);
 
-    const xhttp = new XMLHttpRequest();
-    xhttp.open('POST', '/todo/add', true );
-    xhttp.setRequestHeader("Content-Type", "application/json");
-    xhttp.onreadystatechange = function() {
-        if(this.readyState== 4 && this.status == 200){
-            document.getElementById('demo').innerHTML=this.responseText;
+//     const xhttp = new XMLHttpRequest();
+//     xhttp.open('POST', '/todo/add', true );
+//     xhttp.setRequestHeader("Content-Type", "application/json");
 
-        }
-    };
-    console.log(JSON.stringify({'todo_item':inputAddItem}));
-    xhttp.send(JSON.stringify({'todo_item':inputAddItem}))
-}
+//     if(inputAddItem === '')
+//     {
+//         // msg.classList.add(error);
+//         msg.innerHTML = 'Please enter todo value';
+
+//         setTimeout(() => msg.remove(), 3000);
+//     }
+//     else{
+//         xhttp.onreadystatechange = function() {
+//             if(this.readyState== 4 && this.status == 200){
+//                 const div = document.createElement('div');
+//                 const divCss = " display: flex; justify-content:space-between; background-color: #eee; list-style: none; margin-bottom: 5px; padding: 5px;"
+//                 div.style.cssText = divCss;
+//                 const li = document.createElement('li');
+//                 const chkBx = document.createElement('input');
+//                 chkBx.type = 'checkbox';
+//                 const delBtn = document.createElement('input');
+//                 delBtn.type = 'button';
+//                 delBtn.value = 'delete';
+               
+//                 li.style.listStyle = 'None';
+//                 li.appendChild(document.createTextNode(`${inputAddItem}`));
+//                 div.appendChild(li);
+//                 div.appendChild(chkBx);
+//                 div.appendChild(delBtn);
+                
+//                 todoList.appendChild(div);
+                
+//                 inputAddItem = '';
+//             }
+//         };
+//         console.log(JSON.stringify({'todo_item':inputAddItem}));
+//         xhttp.send(JSON.stringify({'todo_item':inputAddItem}))
+//     }
+// }
 
 
 function taskDone(chkId){
-    const parent = document.getElementById(chkId).parentElement;
-    const completedItemText = parent.children[0];
+    const todoId = chkId.split('-')[1];
     const completedChkBOx = document.getElementById(chkId);
+    const parent = document.getElementById(chkId).parentElement;
+    console.log(parent);
+    // console.log(todoId);
 
     const xhttp = new XMLHttpRequest();
     xhttp.open('POST', '/todo/completed', true );
     xhttp.setRequestHeader("Content-Type", "application/json")
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            const jsonreturn = JSON.parse(xhttp.responseText)
+            console.log(xhttp.responseText);
+
+            const jsonreturn = JSON.parse(xhttp.responseText);
             console.log(jsonreturn['is_completed']);
-            if( jsonreturn['is_completed'] == true){
+            if( jsonreturn['is_completed'] === true){
                 parent.style.backgroundColor= "#a6eda7"
             }
             else{
-                parent.style.backgroundColor= "#eee"
+                parent.style.backgroundColor= "rgb(240, 240, 85)"
             }
         }
       };
     
     let data = {'is_completed': completedChkBOx.checked,
-                'todo_item': completedItemText.textContent}
-    // console.log(JSON.stringify(data))
+                'todo_id': Number(todoId)}
+    // console.log(JSON.stringify(data));
     xhttp.send(JSON.stringify(data));
 }
 
 
 
-function deleteItem(btnId) {
-    const toDeleteItem = document.querySelector('#'+btnId).parentElement;
-    const toDeleteText = toDeleteItem.children[0].textContent;
+function deleteItem(delId) {
+    const todoId = delId.split('-')[1];
+    // console.log(delId.split('-')[1]);
+    const toDeleteItem = document.getElementById(delId).parentElement;
     const xhttp = new XMLHttpRequest();
+    xhttp.open("POST", '/todo/delete', true);
+    xhttp.setRequestHeader("Content-Type", "application/json")
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("demo").innerHTML = this.responseText;
+            console.log(this.responseText);
         }
     };
-    xhttp.open("POST", '/todo/delete', true);
-    xhttp.send(toDeleteText)
+   
+    // console.log(toDeleteItem);
+    xhttp.send(JSON.stringify({'todo_post_id':Number(todoId)}));
     toDeleteItem.remove();
 
 }
 
 
-// function someFunction(){
-//     const text = document.getElementById('message').value;
-//     console.log(JSON.stringify({'text': text}));
-//     const xhttp = new XMLHttpRequest();
-//     xhttp.open("PosT", '/register/somefunction', true);
-//     xhttp.setRequestHeader("Content-Type", "application/json")
-//     xhttp.onreadystatechange = function(){
-//       if (this.readyState == 4 && this.status == 200){
-//         const jsonreturn = JSON.parse(xhttp.responseText)
-//       document.getElementById('demo').innerHTML = jsonreturn['text'];
-//       }
-//     };
-    
-//     xhttp.send(JSON.stringify({'text': text}));
-//   }

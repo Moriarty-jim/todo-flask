@@ -1,49 +1,24 @@
-<div class="container">
-    <div class="message">
-        {% with messages = get_flashed_messages(with_categories=false) %}
-        {% if messages %}
-          {% for  message in messages %}
-            <div class="">
-              {{ message }}
-            </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
-    </div>
-    <form action="{{url_for('register')}}" method="POST">
-        <div>
-            <label for="username">Username</label>
-            <input type="text" id="username" name='username'>
-        </div>
-        <div>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password">
-        </div>
-        <input type="submit" value="register">
-    </form>
-</div>
-<p>already registered? <a href="{{ url_for('login')}}">login</a></p>
+{% extends "layout.html" %}
+{% block csslink%}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/registerlogin.css')}}">
 
+{% endblock csslink %}
+{% block content %}
+<form class="form-container" action="{{url_for('register')}}" method="POST">
+    <h2>Register</h2>
+    <p class="input-container">
+        <label for="username">Username</label>
+        <input type="text" id="username" name='username'>
+    </p>
+    <p class="input-container">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password">
+    </p>
+    <p class="input-container">
+      <input type="submit" value="register">
+    </p>
+</form>
+<p class="end-question">already registered? <a href="{{ url_for('login')}}">login</a></p>
 
-<!-- <label for="">message:</label> 
-<input id="message">
-<button id="button-test"onclick="someFunction()"> send </button>
-<p id="demo"></p>
-
-<script>
-  function someFunction(){
-    const text = document.getElementById('message').value;
-    console.log(JSON.stringify({'text': text}));
-    const xhttp = new XMLHttpRequest();
-    xhttp.open("PosT", '/register/somefunction', true);
-    xhttp.setRequestHeader("Content-Type", "application/json")
-    xhttp.onreadystatechange = function(){
-      if (this.readyState == 4 && this.status == 200){
-        const jsonreturn = JSON.parse(xhttp.responseText)
-      document.getElementById('demo').innerHTML = jsonreturn['text'];
-      }
-    };
-    
-    xhttp.send(JSON.stringify({'text': text}));
-  }
-</script> -->
+{%endblock content %}
